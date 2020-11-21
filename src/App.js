@@ -1,5 +1,7 @@
+import Cart from "components/Cart";
 import HeroSection from "components/HeroSection";
-import ProductsSection from "components/ProductsSection";
+import Portal from "components/Portal";
+import Products from "components/Products";
 import React from "react";
 // import styled from "styled-components";
 // import logo from "./logo.svg";
@@ -7,10 +9,13 @@ import "./App.css";
 
 const App = () => {
 	return (
-		<div>
+		<>
+			<Portal>
+				<Cart />
+			</Portal>
 			<HeroSection />
-			<ProductsSection />
-		</div>
+			<Products />
+		</>
 	);
 };
 

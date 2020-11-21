@@ -1,21 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
-const ProductCard = () => {
+const Product = ({ product }) => {
 	return (
 		<Card>
 			<ProductImageBox>
 				<a href="/#">
-					<ProductImage
-						src="https://d1b929y2mmls08.cloudfront.net/luminskin/img/new-landing-page/age-management.png"
-						alt=""
-					/>
+					<ProductImage src={product.image_url} alt={product.title} />
 				</a>
 			</ProductImageBox>
 			{/* <ProductImage>card</ProductImage> */}
-			<ProductTitle>Age Management Set </ProductTitle>
+			<ProductTitle>{product.title}</ProductTitle>
 			<ProjectPrice>
-				From <span data-product-code="10">$52.00</span>
+				From <span data-product-code="10">${product.price}</span>
 			</ProjectPrice>
 
 			<ProductBtn>Add to cart</ProductBtn>
@@ -100,4 +98,12 @@ const ProductBtn = styled.button`
 	color: #fcfcf9;
 `;
 
-export default ProductCard;
+Product.propTypes = {
+	product: PropTypes.shape({
+		title: PropTypes.string.isRequired,
+		price: PropTypes.number.isRequired,
+		image_url: PropTypes.string.isRequired,
+	}).isRequired,
+};
+
+export default Product;
