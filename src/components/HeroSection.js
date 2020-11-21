@@ -65,7 +65,7 @@ const HeroHeaderSubText = styled.p`
 	font-size: 16px;
 	letter-spacing: 0.03px;
 	text-transform: none;
-	color: #2b2e2b;
+	color: var(--heavy-metal);
 	margin-bottom: 20px;
 
 	@media screen and (min-width: 768px) {
