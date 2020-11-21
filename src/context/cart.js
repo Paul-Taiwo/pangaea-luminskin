@@ -58,6 +58,16 @@ export const CartProvider = ({ children }) => {
 		setCartItems(newItems);
 	};
 
+	const removeFromCart = (event, itemId) => {
+		event.preventDefault();
+		const newItems = [...cartItems];
+		const itemIndex = newItems.findIndex((item) => item.id === itemId);
+
+		newItems.splice(itemIndex, 1);
+
+		setCartItems([...newItems]);
+	};
+
 	const addToCart = (product) => {
 		// check if item is already in cart
 		const found = cartItems.find((item) => item.id === product.id);
@@ -109,6 +119,7 @@ export const CartProvider = ({ children }) => {
 		showCart,
 		hideCart,
 		addToCart,
+		removeFromCart,
 	};
 
 	return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

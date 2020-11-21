@@ -6,11 +6,17 @@ import currencyFormatter from "utils/currencyFormatter";
 import useProducts from "context/products";
 
 const CartItem = ({ item }) => {
-	const { updateQuantity } = useCart();
+	const { updateQuantity, removeFromCart } = useCart();
 	const { currency } = useProducts();
 
 	return (
 		<Product>
+			<Close
+				className="cursor-pointer"
+				onClick={(e) => removeFromCart(e, item.id)}
+			>
+				X
+			</Close>
 			<ProductDescription>
 				<ProductName>{item.title}</ProductName>
 
@@ -46,10 +52,10 @@ const Product = styled.div`
 	height: 150px;
 	margin-bottom: 20px;
 	display: flex;
-	display: flex;
+	position: relative;
 	align-items: center;
-
 	background-color: #fff;
+	/* width: 100%; */
 `;
 
 const ProductDescription = styled.div`
@@ -113,6 +119,14 @@ const Image = styled.img`
 	max-height: 100px;
 	max-width: 100px;
 	object-fit: contain;
+`;
+
+const Close = styled.button`
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	border: none;
+	background-color: #fff;
 `;
 
 CartItem.propTypes = {
