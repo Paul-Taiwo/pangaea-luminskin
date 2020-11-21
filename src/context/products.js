@@ -7,6 +7,7 @@ const ProductContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const ProductProvider = ({ children }) => {
+	const [loadingProducts, setLoadingProducts] = useState(true);
 	const [products, setProducts] = useState([]);
 	const [currency, setCurrency] = useState("USD");
 
@@ -34,12 +35,16 @@ export const ProductProvider = ({ children }) => {
 					priceRaw: product.price,
 					price: currencyFormatter(product.price, currency),
 				}));
+
 				setProducts(formattedProducts);
+				setLoadingProducts(false);
 			});
 	}, [currency]);
 
 	return (
-		<ProductContext.Provider value={{ products, currency, updateCurrency }}>
+		<ProductContext.Provider
+			value={{ products, currency, updateCurrency, loadingProducts }}
+		>
 			{children}
 		</ProductContext.Provider>
 	);

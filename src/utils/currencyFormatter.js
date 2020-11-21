@@ -1,9 +1,9 @@
-const currencyFormatter = (number, currency) =>
+const currencyFormatter = (number, currencyName = "USD") =>
 	new Intl.NumberFormat("en-US", {
 		style: "currency",
-		currency,
+		currency: currencyName,
 		currencySign: "accounting",
-		currencyDisplay: "narrowSymbol",
+		currencyDisplay: "symbol",
 	}).format(number);
 
 export default currencyFormatter;

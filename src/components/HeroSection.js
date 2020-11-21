@@ -90,7 +90,6 @@ const Select = styled.select`
 	padding: 20px;
 	font-size: 13px;
 	letter-spacing: 0.03px;
-	font-family: FF Bau Medium, san-serif;
 	margin-bottom: 35px;
 	color: #4b5548;
 	appearance: none;

@@ -38,7 +38,7 @@ const Cart = () => {
 			<Form>
 				<Header>
 					<Col>
-						<CloseButton onClick={hideCart}>
+						<CloseButton className="cursor-pointer" onClick={hideCart}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 492.004 492.004"
@@ -167,6 +167,7 @@ const CurrencySelect = styled.select`
 	padding: 8px 13px 5px 10px;
 	background-position: 100% 60%;
 	border: none;
+	appearance: none;
 `;
 
 const CartBody = styled.div`

@@ -2,19 +2,65 @@ import React from "react";
 import styled from "styled-components";
 
 import useProducts from "context/products";
-import ProductCard from "./Product";
+import Product from "./Product";
 
 const Products = () => {
-	const { products } = useProducts();
+	const { loadingProducts, products } = useProducts();
 
 	return (
-		<ProductsSection>
-			{products.map((product) => (
-				<ProductCard key={product.id} product={product} />
-			))}
-		</ProductsSection>
+		<>
+			{loadingProducts && (
+				<Loader className="text-center">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						xmlnsXlink="http://www.w3.org/1999/xlink"
+						style={{
+							margin: "auto",
+							background: "rgb(226, 230, 227)",
+							display: "block",
+							shapeRendering: "auto",
+						}}
+						width="200px"
+						height="200px"
+						viewBox="0 0 100 100"
+						preserveAspectRatio="xMidYMid"
+					>
+						<path
+							d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50"
+							fill="#4b5548"
+							stroke="none"
+						>
+							<animateTransform
+								attributeName="transform"
+								type="rotate"
+								dur="1s"
+								repeatCount="indefinite"
+								keyTimes="0;1"
+								values="0 50 51;360 50 51"
+							/>
+						</path>
+					</svg>
+				</Loader>
+			)}
+
+			{!loadingProducts && (
+				<ProductsSection>
+					{products.map((product) => (
+						<Product key={product.id} product={product} />
+					))}
+				</ProductsSection>
+			)}
+		</>
 	);
 };
+const Loader = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	background-color: #e2e6e3;
+	min-height: 500px;
+`;
 
 const ProductsSection = styled.section`
 	padding: 25px;
