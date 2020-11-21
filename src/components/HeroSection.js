@@ -11,9 +11,7 @@ const HeroSection = () => {
 
 			<HeroFilterContainer>
 				<Select placeholder="Filter by">
-					<option value="single-product" disabled selected>
-						Filter by
-					</option>
+					<option value="single-product">Filter by</option>
 					<option value="all-products">All Products</option>
 					<option value="new-products">New Products</option>
 					<option value="sets">Sets</option>
@@ -31,7 +29,6 @@ const HeroSectionContainer = styled.section`
 	justify-content: space-between;
 	padding: 70px 25px 25px;
 	background-color: #fcfcf9;
-	border: 1px solid red;
 
 	@media screen and (min-width: 768px) {
 		flex-direction: row;

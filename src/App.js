@@ -1,21 +1,24 @@
+import React from "react";
+
 import Cart from "components/Cart";
 import HeroSection from "components/HeroSection";
 import Portal from "components/Portal";
 import Products from "components/Products";
-import React from "react";
-// import styled from "styled-components";
-// import logo from "./logo.svg";
-import "./App.css";
+import { CartProvider } from "context/cart";
+import "./index.css";
+import { ProductProvider } from "context/products";
 
 const App = () => {
 	return (
-		<>
-			<Portal>
-				<Cart open />
-			</Portal>
-			<HeroSection />
-			<Products />
-		</>
+		<ProductProvider>
+			<CartProvider>
+				<Portal>
+					<Cart />
+				</Portal>
+				<HeroSection />
+				<Products />
+			</CartProvider>
+		</ProductProvider>
 	);
 };
 

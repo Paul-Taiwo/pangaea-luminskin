@@ -2,21 +2,30 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import useCart from "context/cart";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const Product = ({ product }) => {
+	const { addToCart } = useCart();
+
 	return (
 		<Card>
 			<ProductImageBox>
 				<a href="/#">
-					<ProductImage src={product.image_url} alt={product.title} />
+					<ProductImage
+						effect="blur"
+						src={product.image_url}
+						alt={product.title}
+					/>
 				</a>
 			</ProductImageBox>
-			{/* <ProductImage>card</ProductImage> */}
 			<ProductTitle>{product.title}</ProductTitle>
 			<ProjectPrice>
-				From <span data-product-code="10">${product.price}</span>
+				From <span data-product-code="10">{product.price}</span>
 			</ProjectPrice>
 
-			<ProductBtn>Add to cart</ProductBtn>
+			<ProductBtn onClick={() => addToCart(product)}>Add to cart</ProductBtn>
 		</Card>
 	);
 };
@@ -56,7 +65,7 @@ const ProductImageBox = styled.div`
 	}
 `;
 
-const ProductImage = styled.img`
+const ProductImage = styled(LazyLoadImage)`
 	width: 100%;
 	object-fit: contain;
 	max-height: 180px;
@@ -101,7 +110,7 @@ const ProductBtn = styled.button`
 Product.propTypes = {
 	product: PropTypes.shape({
 		title: PropTypes.string.isRequired,
-		price: PropTypes.number.isRequired,
+		price: PropTypes.string.isRequired,
 		image_url: PropTypes.string.isRequired,
 	}).isRequired,
 };

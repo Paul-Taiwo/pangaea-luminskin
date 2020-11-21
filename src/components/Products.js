@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { gql } from "@apollo/client";
+import React from "react";
 import styled from "styled-components";
 
-import client from "client";
+import useProducts from "context/products";
 import ProductCard from "./Product";
 
 const Products = () => {
-	const [products, setProducts] = useState([]);
-
-	useEffect(() => {
-		client
-			.query({
-				query: gql`
-					query Products {
-						products {
-							id
-							title
-							image_url
-							price(currency: USD)
-						}
-					}
-				`,
-			})
-			.then((result) => setProducts(result.data.products));
-	}, []);
+	const { products } = useProducts();
 
 	return (
 		<ProductsSection>
@@ -39,6 +21,8 @@ const ProductsSection = styled.section`
 	background-color: #e2e6e3;
 	display: grid;
 	grid-gap: 0.75rem;
+	margin-left: auto;
+	margin-right: auto;
 	grid-template-columns: repeat(2, 1fr);
 
 	@media screen and (min-width: 768px) {
@@ -49,12 +33,13 @@ const ProductsSection = styled.section`
 	}
 
 	@media screen and (min-width: 992px) {
-		padding: 4% 8%;
+		padding: 4% 6%;
 	}
 
 	@media screen and (min-width: 1200px) {
 		column-gap: 14rem;
 		row-gap: 8rem;
+		padding: 4% 10%;
 	}
 `;
 export default Products;

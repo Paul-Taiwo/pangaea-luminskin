@@ -1,26 +1,42 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import useCart from "context/cart";
+import currencyFormatter from "utils/currencyFormatter";
+import useProducts from "context/products";
 
-const CartItem = () => {
+const CartItem = ({ item }) => {
+	const { updateQuantity } = useCart();
+	const { currency } = useProducts();
+
 	return (
 		<Product>
 			<ProductDescription>
-				<ProductName>Dark Circle Defence</ProductName>
+				<ProductName>{item.title}</ProductName>
 
 				<Quantity>
 					<Selector>
-						<CounterAction className="cursor-pointer">-</CounterAction>
-						<Count> 1 </Count>
-						<CounterAction className="cursor-pointer">+</CounterAction>
+						<CounterAction
+							className="cursor-pointer"
+							onClick={() => updateQuantity(item.id, "decrement")}
+						>
+							-
+						</CounterAction>
+						<Count> {item.quantity} </Count>
+						<CounterAction
+							className="cursor-pointer"
+							onClick={() => updateQuantity(item.id, "increment")}
+						>
+							+
+						</CounterAction>
 					</Selector>
-					<Price>US$57.29</Price>
+					<Price>
+						{currencyFormatter(item.priceRaw * item.quantity, currency)}
+					</Price>
 				</Quantity>
 			</ProductDescription>
-			<ProductImage>
-				<Image
-					src="https://d1b929y2mmls08.cloudfront.net/luminskin/img/new-landing-page/classic-maintenance.png"
-					alt="Product"
-				/>
+			<ProductImage className="text-center">
+				<Image src={item.image_url} alt={item.title} />
 			</ProductImage>
 		</Product>
 	);
@@ -94,6 +110,20 @@ const ProductImage = styled.div`
 
 const Image = styled.img`
 	width: 100%;
+	max-height: 100px;
+	max-width: 100px;
+	object-fit: contain;
 `;
+
+CartItem.propTypes = {
+	item: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		image_url: PropTypes.string.isRequired,
+		quantity: PropTypes.number.isRequired,
+		price: PropTypes.string.isRequired,
+		priceRaw: PropTypes.number.isRequired,
+	}).isRequired,
+};
 
 export default CartItem;

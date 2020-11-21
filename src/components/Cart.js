@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import client from "client";
+import { gql } from "@apollo/client";
 
+import useCart from "context/cart";
+import useProducts from "context/products";
 import CartItem from "./CartItem";
 
-const Cart = ({ open }) => {
+const Cart = () => {
+	const { isCartOpen, hideCart, cartTotal, cartItems } = useCart();
+	const { currency, updateCurrency } = useProducts();
+
+	const [currencyList, setCurrencyList] = useState([]);
+
+	useEffect(() => {
+		client
+			.query({
+				query: gql`
+					query Currency {
+						currency
+					}
+				`,
+			})
+			.then((result) => setCurrencyList(result.data.currency));
+	}, []);
+
+	useEffect(() => {
+		if (isCartOpen) {
+			document.body.classList.add("overflow-hidden");
+		} else {
+			document.body.classList.remove("overflow-hidden");
+		}
+	}, [isCartOpen]);
+
 	return (
-		<Overlay open={open}>
+		<Overlay open={isCartOpen}>
 			<Form>
 				<Header>
 					<Col>
-						<CloseButton>
+						<CloseButton onClick={hideCart}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 492.004 492.004"
@@ -31,24 +59,31 @@ const Cart = ({ open }) => {
 				</Header>
 
 				<CurrencySelectContainer>
-					<CurrencySelect>
-						<option value="USD"> USD </option>
-						<option value="EUR"> EUR </option>
+					<CurrencySelect value={currency} onChange={updateCurrency}>
+						{currencyList &&
+							currencyList.map((currencyValue) => (
+								<option key={currencyValue} value={currencyValue}>
+									{currencyValue}
+								</option>
+							))}
 					</CurrencySelect>
 				</CurrencySelectContainer>
 
 				<CartBody>
 					<div>
-						{[...new Array(48).keys()].map(() => (
-							<CartItem />
-						))}
+						{cartItems.length !== 0 &&
+							cartItems.map((item) => <CartItem key={item.id} item={item} />)}
+
+						{cartItems.length === 0 && (
+							<p className="text-center">No item in your cart</p>
+						)}
 					</div>
 				</CartBody>
 
 				<CartFooter>
 					<CartSubTotal>
 						<p>Subtotal</p>
-						<p>USD: 20</p>
+						<p>{cartTotal}</p>
 					</CartSubTotal>
 
 					<Proceed className="cursor-pointer">Proceed to Checkout</Proceed>
@@ -170,9 +205,5 @@ const Proceed = styled.button`
 	width: 100%;
 	background-color: #4b5548;
 `;
-
-Cart.propTypes = {
-	open: PropTypes.bool.isRequired,
-};
 
 export default Cart;
