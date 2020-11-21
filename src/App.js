@@ -11,7 +11,7 @@ const App = () => {
 	return (
 		<>
 			<Portal>
-				<Cart />
+				<Cart open />
 			</Portal>
 			<HeroSection />
 			<Products />

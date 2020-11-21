@@ -26,15 +26,15 @@ const Products = () => {
 	}, []);
 
 	return (
-		<ProductsSectionContainer>
+		<ProductsSection>
 			{products.map((product) => (
 				<ProductCard key={product.id} product={product} />
 			))}
-		</ProductsSectionContainer>
+		</ProductsSection>
 	);
 };
 
-const ProductsSectionContainer = styled.section`
+const ProductsSection = styled.section`
 	padding: 25px;
 	background-color: #e2e6e3;
 	display: grid;

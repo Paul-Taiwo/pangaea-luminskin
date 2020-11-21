@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+
 import CartItem from "./CartItem";
 
-const Cart = () => {
+const Cart = ({ open }) => {
 	return (
-		<Overlay>
+		<Overlay open={open}>
 			<Form>
 				<Header>
 					<Col>
@@ -63,10 +65,10 @@ const Overlay = styled.div`
 	width: 100%;
 	height: 100%;
 	background-color: rgba(110, 123, 112, 0.4);
-	opacity: 1;
-	pointer-events: none;
+	pointer-events: ${(props) => (props.open ? "auto" : "none")};
+	z-index: ${(props) => (props.open ? 500 : 0)};
+	opacity: ${(props) => (props.open ? 1 : 0)};
 	transition: all 0.4s ease-in-out;
-	z-index: 2;
 `;
 
 const Form = styled.form`
@@ -168,5 +170,9 @@ const Proceed = styled.button`
 	width: 100%;
 	background-color: #4b5548;
 `;
+
+Cart.propTypes = {
+	open: PropTypes.bool.isRequired,
+};
 
 export default Cart;
